@@ -11,6 +11,7 @@ export interface User {
   coins: number;
   streak: number;
   completedLessons: string[];
+  powerUps: PowerUp[];
 }
 
 export interface Module {
@@ -28,6 +29,7 @@ export interface Lesson {
   id: string;
   title: string;
   description: string;
+  videoUrl: string;
   duration: number;
   completed: boolean;
   xpReward: number;
@@ -56,6 +58,25 @@ export interface Achievement {
   unlocked: boolean;
 }
 
+export interface PowerUp {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  price: number;
+  effect: string;
+  quantity: number;
+}
+
+export interface RankingUser {
+  id: string;
+  name: string;
+  avatar: string;
+  xp: number;
+  level: number;
+  position: number;
+}
+
 export const mockUser: User = {
   id: '1',
   name: 'John Doe',
@@ -66,8 +87,91 @@ export const mockUser: User = {
   totalXp: 2820,
   coins: 1250,
   streak: 5,
-  completedLessons: ['1-1', '1-2', '2-1', '2-2', '3-1']
+  completedLessons: ['1-1', '1-2', '2-1', '2-2', '3-1'],
+  powerUps: []
 };
+
+export const powerUps: PowerUp[] = [
+  {
+    id: '1',
+    name: 'Duplo XP',
+    description: 'Ganhe o dobro de XP por 1 hora',
+    icon: '⚡',
+    price: 100,
+    effect: 'double_xp',
+    quantity: 0
+  },
+  {
+    id: '2',
+    name: 'Dica Extra',
+    description: 'Receba uma dica adicional nos quizzes',
+    icon: '💡',
+    price: 50,
+    effect: 'extra_hint',
+    quantity: 0
+  },
+  {
+    id: '3',
+    name: 'Proteção de Streak',
+    description: 'Protege sua sequência por 1 dia',
+    icon: '🛡️',
+    price: 75,
+    effect: 'streak_protection',
+    quantity: 0
+  },
+  {
+    id: '4',
+    name: 'Moedas Extras',
+    description: 'Ganhe 50% mais moedas por 2 horas',
+    icon: '💰',
+    price: 80,
+    effect: 'extra_coins',
+    quantity: 0
+  }
+];
+
+export const weeklyRanking: RankingUser[] = [
+  {
+    id: '1',
+    name: 'John Doe',
+    avatar: '😎',
+    xp: 2820,
+    level: 5,
+    position: 1
+  },
+  {
+    id: '2',
+    name: 'Maria Silva',
+    avatar: '👩‍💼',
+    xp: 2650,
+    level: 4,
+    position: 2
+  },
+  {
+    id: '3',
+    name: 'Carlos Santos',
+    avatar: '👨‍💻',
+    xp: 2400,
+    level: 4,
+    position: 3
+  },
+  {
+    id: '4',
+    name: 'Ana Costa',
+    avatar: '👩‍🎓',
+    xp: 2200,
+    level: 3,
+    position: 4
+  },
+  {
+    id: '5',
+    name: 'Pedro Lima',
+    avatar: '👨‍🚀',
+    xp: 2000,
+    level: 3,
+    position: 5
+  }
+];
 
 export const achievements: Achievement[] = [
   {
@@ -122,6 +226,7 @@ export const modules: Module[] = [
         id: '1-1',
         title: 'O que são investimentos?',
         description: 'Conceitos básicos sobre investimentos e por que investir',
+        videoUrl: 'https://example.com/video1',
         duration: 480,
         completed: false,
         xpReward: 50,
@@ -146,6 +251,7 @@ export const modules: Module[] = [
         id: '1-2',
         title: 'Perfil do Investidor',
         description: 'Descubra qual é o seu perfil de risco e como isso impacta seus investimentos',
+        videoUrl: 'https://example.com/video2',
         duration: 420,
         completed: false,
         xpReward: 50,
@@ -165,6 +271,7 @@ export const modules: Module[] = [
         id: '1-3',
         title: 'Diversificação de Investimentos',
         description: 'A importância de não colocar todos os ovos na mesma cesta',
+        videoUrl: 'https://example.com/video3',
         duration: 360,
         completed: false,
         xpReward: 50,
@@ -189,6 +296,7 @@ export const modules: Module[] = [
         id: '1-4',
         title: 'Renda Fixa vs Renda Variável',
         description: 'Entenda as diferenças entre os principais tipos de investimento',
+        videoUrl: 'https://example.com/video4',
         duration: 540,
         completed: false,
         xpReward: 60,
@@ -203,6 +311,56 @@ export const modules: Module[] = [
                 'Retorno previsível',
                 'Sem garantias',
                 'Alto risco sempre'
+              ],
+              correct: 1
+            }
+          ]
+        }
+      },
+      {
+        id: '1-5',
+        title: 'Reserva de Emergência',
+        description: 'Como construir e manter uma reserva financeira adequada',
+        videoUrl: 'https://example.com/video5',
+        duration: 300,
+        completed: false,
+        xpReward: 45,
+        coinReward: 9,
+        quiz: {
+          questions: [
+            {
+              id: '1',
+              question: 'Qual deve ser o valor ideal da reserva de emergência?',
+              options: [
+                '3 a 6 meses de gastos',
+                '1 mês de gastos',
+                '12 meses de gastos',
+                'Não é necessária'
+              ],
+              correct: 0
+            }
+          ]
+        }
+      },
+      {
+        id: '1-6',
+        title: 'Planejamento Financeiro Pessoal',
+        description: 'Como organizar suas finanças e definir objetivos',
+        videoUrl: 'https://example.com/video6',
+        duration: 450,
+        completed: false,
+        xpReward: 55,
+        coinReward: 11,
+        quiz: {
+          questions: [
+            {
+              id: '1',
+              question: 'Qual o primeiro passo no planejamento financeiro?',
+              options: [
+                'Investir em ações',
+                'Controlar gastos e receitas',
+                'Comprar imóveis',
+                'Pedir empréstimos'
               ],
               correct: 1
             }
@@ -224,6 +382,7 @@ export const modules: Module[] = [
         id: '2-1',
         title: 'O que é Bitcoin?',
         description: 'História e fundamentos da primeira criptomoeda',
+        videoUrl: 'https://example.com/video7',
         duration: 600,
         completed: false,
         xpReward: 60,
@@ -243,6 +402,7 @@ export const modules: Module[] = [
         id: '2-2',
         title: 'Blockchain: A Tecnologia por Trás',
         description: 'Como funciona a tecnologia que revolucionou as finanças',
+        videoUrl: 'https://example.com/video8',
         duration: 480,
         completed: false,
         xpReward: 55,
@@ -267,6 +427,7 @@ export const modules: Module[] = [
         id: '2-3',
         title: 'Altcoins: Além do Bitcoin',
         description: 'Conheça outras criptomoedas importantes do mercado',
+        videoUrl: 'https://example.com/video9',
         duration: 420,
         completed: false,
         xpReward: 50,
@@ -291,6 +452,7 @@ export const modules: Module[] = [
         id: '2-4',
         title: 'Carteiras Digitais e Segurança',
         description: 'Como armazenar suas criptomoedas com segurança',
+        videoUrl: 'https://example.com/video10',
         duration: 360,
         completed: false,
         xpReward: 45,
@@ -305,6 +467,56 @@ export const modules: Module[] = [
                 'Carteira fria (cold wallet)',
                 'Notebook pessoal',
                 'Papel escrito à mão'
+              ],
+              correct: 1
+            }
+          ]
+        }
+      },
+      {
+        id: '2-5',
+        title: 'DeFi: Finanças Descentralizadas',
+        description: 'Entenda o futuro das finanças sem intermediários',
+        videoUrl: 'https://example.com/video11',
+        duration: 540,
+        completed: false,
+        xpReward: 65,
+        coinReward: 13,
+        quiz: {
+          questions: [
+            {
+              id: '1',
+              question: 'O que significa DeFi?',
+              options: [
+                'Descentralized Finance',
+                'Digital Finance',
+                'Definitive Finance',
+                'Decrypted Finance'
+              ],
+              correct: 0
+            }
+          ]
+        }
+      },
+      {
+        id: '2-6',
+        title: 'NFTs e Tokens',
+        description: 'Tokens não fungíveis e suas aplicações',
+        videoUrl: 'https://example.com/video12',
+        duration: 390,
+        completed: false,
+        xpReward: 50,
+        coinReward: 10,
+        quiz: {
+          questions: [
+            {
+              id: '1',
+              question: 'NFT significa?',
+              options: [
+                'New Financial Token',
+                'Non-Fungible Token',
+                'Network Finance Tool',
+                'None of the above'
               ],
               correct: 1
             }
@@ -326,6 +538,7 @@ export const modules: Module[] = [
         id: '3-1',
         title: 'O que são LCI e LCA?',
         description: 'Entenda as Letras de Crédito Imobiliário e do Agronegócio',
+        videoUrl: 'https://example.com/video13',
         duration: 300,
         completed: false,
         xpReward: 40,
@@ -350,6 +563,7 @@ export const modules: Module[] = [
         id: '3-2',
         title: 'Rentabilidade e Prazos',
         description: 'Como calcular o retorno e escolher o prazo ideal',
+        videoUrl: 'https://example.com/video14',
         duration: 360,
         completed: false,
         xpReward: 45,
@@ -369,6 +583,7 @@ export const modules: Module[] = [
         id: '3-3',
         title: 'Garantias e Riscos',
         description: 'Entenda as proteções e limitações destes investimentos',
+        videoUrl: 'https://example.com/video15',
         duration: 240,
         completed: false,
         xpReward: 35,
@@ -380,6 +595,31 @@ export const modules: Module[] = [
               question: 'LCI/LCA são garantidas por qual órgão?',
               options: ['Banco Central', 'FGC', 'CVM', 'Governo Federal'],
               correct: 1
+            }
+          ]
+        }
+      },
+      {
+        id: '3-4',
+        title: 'Comparação com Outros Investimentos',
+        description: 'LCI/LCA versus CDB, Tesouro Direto e Poupança',
+        videoUrl: 'https://example.com/video16',
+        duration: 420,
+        completed: false,
+        xpReward: 50,
+        coinReward: 10,
+        quiz: {
+          questions: [
+            {
+              id: '1',
+              question: 'Comparado à poupança, LCI/LCA oferecem:',
+              options: [
+                'Menor rentabilidade',
+                'Mesma rentabilidade',
+                'Maior rentabilidade',
+                'Rentabilidade variável'
+              ],
+              correct: 2
             }
           ]
         }
@@ -399,6 +639,7 @@ export const modules: Module[] = [
         id: '4-1',
         title: 'Introdução aos FIIs',
         description: 'O que são e como funcionam os Fundos Imobiliários',
+        videoUrl: 'https://example.com/video17',
         duration: 480,
         completed: false,
         xpReward: 50,
@@ -418,6 +659,7 @@ export const modules: Module[] = [
         id: '4-2',
         title: 'Tipos de FIIs',
         description: 'Fundos de tijolo, papel e híbridos',
+        videoUrl: 'https://example.com/video18',
         duration: 420,
         completed: false,
         xpReward: 45,
@@ -453,6 +695,7 @@ export const modules: Module[] = [
         id: '5-1',
         title: 'O que são Fintechs?',
         description: 'Como a tecnologia está transformando as finanças',
+        videoUrl: 'https://example.com/video19',
         duration: 360,
         completed: false,
         xpReward: 40,
@@ -477,6 +720,7 @@ export const modules: Module[] = [
         id: '5-2',
         title: 'Bancos Digitais vs Tradicionais',
         description: 'Vantagens e desvantagens de cada modelo',
+        videoUrl: 'https://example.com/video20',
         duration: 300,
         completed: false,
         xpReward: 35,
@@ -512,6 +756,7 @@ export const modules: Module[] = [
         id: '6-1',
         title: 'O que é a B3?',
         description: 'Conheça a bolsa de valores brasileira',
+        videoUrl: 'https://example.com/video21',
         duration: 420,
         completed: false,
         xpReward: 45,
@@ -536,6 +781,7 @@ export const modules: Module[] = [
         id: '6-2',
         title: 'Horário de Funcionamento',
         description: 'Quando e como operar na bolsa',
+        videoUrl: 'https://example.com/video22',
         duration: 240,
         completed: false,
         xpReward: 30,
@@ -571,6 +817,7 @@ export const modules: Module[] = [
         id: '7-1',
         title: 'O que são Ações?',
         description: 'Entenda como se tornar sócio de uma empresa',
+        videoUrl: 'https://example.com/video23',
         duration: 480,
         completed: false,
         xpReward: 50,
@@ -595,6 +842,7 @@ export const modules: Module[] = [
         id: '7-2',
         title: 'Tipos de Ações: ON vs PN',
         description: 'Diferenças entre ações ordinárias e preferenciais',
+        videoUrl: 'https://example.com/video24',
         duration: 360,
         completed: false,
         xpReward: 40,
@@ -619,6 +867,7 @@ export const modules: Module[] = [
         id: '7-3',
         title: 'Análise Fundamentalista',
         description: 'Como analisar empresas para investir',
+        videoUrl: 'https://example.com/video25',
         duration: 600,
         completed: false,
         xpReward: 60,
