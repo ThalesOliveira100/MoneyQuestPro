@@ -1,73 +1,80 @@
-# Welcome to your Lovable project
+# 💰 Money Quest PRO
 
-## Project info
+**Portal Educacional Gamificado para Jovens sobre Investimentos Digitais**
 
-**URL**: https://lovable.dev/projects/d71242af-92fc-4107-8bb6-c8188dc0bafb
+Este projeto é um MVP desenvolvido com foco em educação financeira digital para o público jovem, utilizando técnicas de gamificação para tornar o aprendizado mais envolvente e interativo.
 
-## How can I edit this code?
+## 🧠 Objetivo
 
-There are several ways of editing your application.
+Despertar o interesse e promover o aprendizado de conceitos fundamentais sobre investimentos digitais, por meio de uma plataforma leve, acessível e gamificada.
 
-**Use Lovable**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d71242af-92fc-4107-8bb6-c8188dc0bafb) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
 
-**Use your preferred IDE**
+## 🚀 Funcionalidades
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- ✅ Módulos com vídeos educativos e quizzes interativos ao final de cada lição
+- 🧩 Sistema de gamificação: moedas, missões, níveis e recompensas
+- 🛍️ Loja interna para trocar moedas por itens aplicáveis às avaliações
+- 🏆 Ranking semanal e mensal baseado em pontos de experiência
+- 🌗 Alternância entre modo claro e modo escuro
+- 👤 Tela de login/registro e edição básica de perfil
+- 🚧 Tela para upgrade de conta (modo PRO — em breve)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-Follow these steps:
+---
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 🛠️ Tecnologias Utilizadas
 
-# Step 3: Install the necessary dependencies.
-npm i
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+
+---
+
+
+## 🧪 Como executar localmente
+
+### Pré-requisitos
+- Node.js e npm instalados (recomenda-se usar [nvm](https://github.com/nvm-sh/nvm))
+
+### Passos
+
+```bash
+# Clone o repositório
+git clone https://github.com/ThalesOliveira100/quest-invest-learn
+
+# Acesse o diretório do projeto
+cd quest-invest-learn
+
+# Instale as dependências
+npm install
+
+# Inicie o servidor de desenvolvimento
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📄 Licença
 
-## What technologies are used for this project?
+Este projeto está licenciado sob a GNU Affero General Public License v3.0 (AGPL-3.0).
+Leia mais em [LICENSE.](./LICENSE)
 
-This project is built with:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/d71242af-92fc-4107-8bb6-c8188dc0bafb) and click on Share -> Publish.
+## 👥 Créditos
 
-## Can I connect a custom domain to my Lovable project?
+Desenvolvido por **Thales Oliveira** como parte de um projeto acadêmico no contexto da **Atividade Extensionista II: Tecnologia Aplicada à Inclusão Digital**, com potencial de expansão para uso comercial futuro.
 
-Yes, you can!
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+---
