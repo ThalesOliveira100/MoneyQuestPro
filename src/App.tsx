@@ -5,6 +5,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "next-themes";
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
@@ -24,43 +25,45 @@ const App = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            {/* Rota de autenticação sem layout */}
-            <Route path="/auth" element={<Auth />} />
-            
-            {/* Rotas com layout */}
-            <Route path="/*" element={
-              <div className="min-h-screen bg-background flex w-full">
-                <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-                
-                <div className="flex-1 flex flex-col md:ml-64">
-                  <Header onMenuClick={() => setSidebarOpen(true)} />
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              {/* Rota de autenticação sem layout */}
+              <Route path="/auth" element={<Auth />} />
+              
+              {/* Rotas com layout */}
+              <Route path="/*" element={
+                <div className="min-h-screen bg-background flex w-full">
+                  <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
                   
-                  <main className="flex-1 overflow-auto">
-                    <Routes>
-                      <Route path="/" element={<Dashboard />} />
-                      <Route path="/modules" element={<Modules />} />
-                      <Route path="/modules/:moduleId" element={<ModuleDetail />} />
-                      <Route path="/ranking" element={<Ranking />} />
-                      <Route path="/shop" element={<Shop />} />
-                      <Route path="/profile" element={<Profile />} />
-                      <Route path="/profile/edit" element={<EditProfile />} />
-                      <Route path="/upgrade" element={<Upgrade />} />
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </main>
+                  <div className="flex-1 flex flex-col md:ml-64">
+                    <Header onMenuClick={() => setSidebarOpen(true)} />
+                    
+                    <main className="flex-1 overflow-auto">
+                      <Routes>
+                        <Route path="/" element={<Dashboard />} />
+                        <Route path="/modules" element={<Modules />} />
+                        <Route path="/modules/:moduleId" element={<ModuleDetail />} />
+                        <Route path="/ranking" element={<Ranking />} />
+                        <Route path="/shop" element={<Shop />} />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/profile/edit" element={<EditProfile />} />
+                        <Route path="/upgrade" element={<Upgrade />} />
+                        <Route path="*" element={<NotFound />} />
+                      </Routes>
+                    </main>
+                  </div>
                 </div>
-              </div>
-            } />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+              } />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 };
 
