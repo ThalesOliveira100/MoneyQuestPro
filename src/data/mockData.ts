@@ -34,6 +34,9 @@ export const user: User = {
   ]
 };
 
+// Export mockUser as an alias for user to maintain compatibility
+export const mockUser = user;
+
 export const modules: Module[] = [
   {
     id: "1",
