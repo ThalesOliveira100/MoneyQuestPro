@@ -13,6 +13,8 @@ import ModuleDetail from './pages/ModuleDetail';
 import Ranking from './pages/Ranking';
 import Shop from './pages/Shop';
 import Profile from './pages/Profile';
+import EditProfile from './pages/EditProfile';
+import Upgrade from './pages/Upgrade';
 import Auth from './pages/Auth';
 import NotFound from "./pages/NotFound";
 
@@ -33,7 +35,7 @@ const App = () => {
             
             {/* Rotas com layout */}
             <Route path="/*" element={
-              <div className="min-h-screen bg-gray-50 flex w-full">
+              <div className="min-h-screen bg-background flex w-full">
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
                 
                 <div className="flex-1 flex flex-col md:ml-64">
@@ -47,6 +49,8 @@ const App = () => {
                       <Route path="/ranking" element={<Ranking />} />
                       <Route path="/shop" element={<Shop />} />
                       <Route path="/profile" element={<Profile />} />
+                      <Route path="/profile/edit" element={<EditProfile />} />
+                      <Route path="/upgrade" element={<Upgrade />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </main>

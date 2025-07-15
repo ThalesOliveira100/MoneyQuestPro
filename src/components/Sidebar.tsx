@@ -42,17 +42,17 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
       {/* Sidebar */}
       <aside className={cn(
-        "fixed left-0 top-0 z-50 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:inset-0",
+        "fixed left-0 top-0 z-50 h-full w-64 bg-background border-r border-border shadow-lg transform transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:inset-0",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         <div className="flex flex-col h-full">
           {/* Header do Sidebar */}
-          <div className="flex items-center justify-between p-4 border-b md:hidden">
+          <div className="flex items-center justify-between p-4 border-b border-border md:hidden">
             <div className="flex items-center">
               <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-2 rounded-lg mr-3">
                 <span className="font-bold text-lg">M</span>
               </div>
-              <h2 className="text-lg font-semibold">MoneyQuest</h2>
+              <h2 className="text-lg font-semibold text-foreground">MoneyQuest</h2>
             </div>
             <Button variant="ghost" size="icon" onClick={onClose}>
               <X className="h-5 w-5" />
@@ -71,13 +71,13 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                   className={cn(
                     "flex items-center px-3 py-3 rounded-lg text-sm font-medium transition-colors",
                     isActive
-                      ? "bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600 border-r-2 border-blue-600"
-                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                      ? "bg-primary/10 text-primary border-r-2 border-primary"
+                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                   )}
                 >
                   <item.icon className={cn(
                     "mr-3 h-5 w-5",
-                    isActive ? "text-blue-600" : "text-gray-400"
+                    isActive ? "text-primary" : "text-muted-foreground"
                   )} />
                   {item.name}
                 </NavLink>
@@ -86,7 +86,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           </nav>
 
           {/* Footer do Sidebar */}
-          <div className="p-4 border-t">
+          <div className="p-4 border-t border-border">
             <div className="bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg p-4 text-white">
               <div className="flex items-center mb-2">
                 <Crown className="h-5 w-5 mr-2" />
@@ -98,6 +98,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               <Button 
                 size="sm" 
                 className="w-full bg-white text-blue-600 hover:bg-gray-100"
+                onClick={() => window.location.href = '/upgrade'}
               >
                 Fazer Upgrade
               </Button>
