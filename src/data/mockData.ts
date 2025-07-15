@@ -1,8 +1,10 @@
+
 import { User, Module, Achievement, PowerUp, RankingUser } from '@/types';
 
 export const user: User = {
   id: "1",
   name: "João Silva",
+  email: "joao.silva@email.com",
   avatar: "👨‍💼",
   level: 5,
   xp: 2450,
