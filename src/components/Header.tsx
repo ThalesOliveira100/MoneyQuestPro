@@ -1,8 +1,10 @@
 
 import { useState } from 'react';
-import { Bell, Menu, User, Coins, Zap } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { mockUser } from '@/data/mockData';
+import NotificationDropdown from './NotificationDropdown';
+import ProfileDropdown from './ProfileDropdown';
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -42,46 +44,38 @@ const Header = ({ onMenuClick }: HeaderProps) => {
             </div>
           </div>
 
-          {/* Stats do usuário */}
-          <div className="flex items-center space-x-4">
-            {/* Moedas */}
-            <div className="flex items-center bg-yellow-50 px-3 py-1 rounded-full">
-              <Coins className="h-4 w-4 text-yellow-600 mr-1" />
-              <span className="text-sm font-semibold text-yellow-700">{user.coins}</span>
-            </div>
-
-            {/* XP e Level */}
+          {/* Stats do usuário e ações */}
+          <div className="flex items-center space-x-2 sm:space-x-4">
+            {/* Stats - ocultos em mobile muito pequeno */}
             <div className="hidden sm:flex items-center space-x-3">
-              <div className="flex items-center bg-blue-50 px-3 py-1 rounded-full">
-                <Zap className="h-4 w-4 text-blue-600 mr-1" />
-                <span className="text-sm font-semibold text-blue-700">Nível {user.level}</span>
+              {/* Moedas */}
+              <div className="flex items-center bg-yellow-50 px-2 sm:px-3 py-1 rounded-full">
+                <span className="text-xs sm:text-sm font-semibold text-yellow-700">{user.coins}</span>
               </div>
-              
-              <div className="flex flex-col items-end">
-                <div className="w-20 bg-gray-200 rounded-full h-2">
-                  <div 
-                    className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${getXpProgress()}%` }}
-                  ></div>
+
+              {/* XP e Level */}
+              <div className="hidden lg:flex items-center space-x-3">
+                <div className="flex items-center bg-blue-50 px-3 py-1 rounded-full">
+                  <span className="text-sm font-semibold text-blue-700">Nível {user.level}</span>
                 </div>
-                <span className="text-xs text-gray-500 mt-1">{user.xp} XP</span>
+                
+                <div className="flex flex-col items-end">
+                  <div className="w-16 xl:w-20 bg-gray-200 rounded-full h-2">
+                    <div 
+                      className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${getXpProgress()}%` }}
+                    ></div>
+                  </div>
+                  <span className="text-xs text-gray-500 mt-1">{user.xp} XP</span>
+                </div>
               </div>
             </div>
 
             {/* Notificações */}
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                3
-              </span>
-            </Button>
+            <NotificationDropdown />
 
             {/* Avatar do usuário */}
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white">
-                <span className="text-lg">{user.avatar}</span>
-              </div>
-            </Button>
+            <ProfileDropdown />
           </div>
         </div>
       </div>
