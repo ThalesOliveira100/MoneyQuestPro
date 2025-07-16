@@ -50,7 +50,7 @@ Despertar o interesse e promover o aprendizado de conceitos fundamentais sobre i
 git clone https://github.com/ThalesOliveira100/quest-invest-learn
 
 # Acesse o diretório do projeto
-cd quest-invest-learn
+cd MoneyQuestPro
 
 # Instale as dependências
 npm install
