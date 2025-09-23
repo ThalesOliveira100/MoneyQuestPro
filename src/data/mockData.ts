@@ -53,7 +53,7 @@ export const modules: Module[] = [
         id: "1-1",
         title: "O que são investimentos?",
         description: "Entenda os fundamentos dos investimentos e por que são importantes",
-        videoUrl: "https://example.com/video1",
+        videoUrl: "https://www.youtube.com/watch?v=bpz7-8qUVRk",
         duration: 300,
         xpReward: 50,
         coinReward: 10,
