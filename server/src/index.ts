@@ -24,8 +24,60 @@ app.listen(PORT, () => {
 });
 
 
-// /api/v1/users
-// /api/v1/power-ups
-// /api/v1/achievements
-// /api/v1/modules
-// /api/v1/weekly-ranking
+// Mock data (substitua por integração com banco de dados futuramente)
+let users: any[] = [];
+let powerUps: any[] = [];
+let achievements: any[] = [];
+let modules: any[] = [];
+let weeklyRanking: any[] = [];
+
+// USERS
+app.get('/api/v1/users', (req: Request, res: Response) => {
+  res.json(users);
+});
+app.post('/api/v1/users', (req: Request, res: Response) => {
+  const user = req.body;
+  users.push(user);
+  res.status(201).json(user);
+});
+
+// POWER-UPS
+app.get('/api/v1/power-ups', (req: Request, res: Response) => {
+  res.json(powerUps);
+});
+app.post('/api/v1/power-ups', (req: Request, res: Response) => {
+  const powerUp = req.body;
+  powerUps.push(powerUp);
+  res.status(201).json(powerUp);
+});
+
+// ACHIEVEMENTS
+app.get('/api/v1/achievements', (req: Request, res: Response) => {
+  res.json(achievements);
+});
+app.post('/api/v1/achievements', (req: Request, res: Response) => {
+  const achievement = req.body;
+  achievements.push(achievement);
+  res.status(201).json(achievement);
+});
+
+// MODULES
+app.get('/api/v1/modules', (req: Request, res: Response) => {
+  res.json(modules);
+});
+app.post('/api/v1/modules', (req: Request, res: Response) => {
+  const module = req.body;
+  modules.push(module);
+  res.status(201).json(module);
+});
+
+// WEEKLY RANKING
+app.get('/api/v1/weekly-ranking', (req: Request, res: Response) => {
+  res.json(weeklyRanking);
+});
+app.post('/api/v1/weekly-ranking', (req: Request, res: Response) => {
+  const ranking = req.body;
+  weeklyRanking.push(ranking);
+  res.status(201).json(ranking);
+});
+
