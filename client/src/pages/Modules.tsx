@@ -43,10 +43,10 @@ const Modules = () => {
             className="pl-10"
           />
         </div>
-        <Button variant="outline" className="flex items-center">
+        {/* <Button variant="outline" className="flex items-center">
           <Filter className="h-4 w-4 mr-2" />
           Filtros
-        </Button>
+        </Button> */}
       </div>
 
       {/* Progress Overview */}

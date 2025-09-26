@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { mockUser, achievements, modules } from '@/data/mockData';
 import { useNavigate } from 'react-router-dom';
+import { toast } from '@/hooks/use-toast';
 import { 
   User, 
   Trophy, 
@@ -41,6 +42,13 @@ const Profile = () => {
   const handleViewProfileEdit = () => {
     navigate('/profile/edit');
     setIsOpen(false);
+  }
+
+  const handlerNotifyMe = () => {
+    toast({
+      title: "Notificação ativada!",
+      description: "Você será notificado quando as configurações estiverem disponíveis.",
+    });
   }
 
   const completedModules = modules.filter(m => m.completed).length;
@@ -264,7 +272,7 @@ const Profile = () => {
                 <p className="text-gray-600 mb-4">
                   As configurações de perfil estarão disponíveis em breve!
                 </p>
-                <Button variant="outline">
+                <Button variant="outline" onClick={handlerNotifyMe}>
                   Me Notificar
                 </Button>
               </div>
