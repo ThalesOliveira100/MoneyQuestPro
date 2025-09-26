@@ -21,6 +21,7 @@ import { mockUser } from '@/data/mockData';
 const editProfileSchema = z.object({
   name: z.string().min(2, 'Nome deve ter pelo menos 2 caracteres'),
   email: z.string().email('E-mail inválido'),
+  password: z.string().min(6, 'Senha deve ter pelo menos 6 caracteres').optional(),
   phone: z.string().regex(/^\(\d{2}\)\s\d{4,5}-\d{4}$/, 'Telefone deve estar no formato (XX) XXXXX-XXXX')
 });
 
@@ -35,6 +36,7 @@ const EditProfile = () => {
     defaultValues: {
       name: mockUser.name,
       email: mockUser.email,
+      password: mockUser.password || '',
       phone: '(11) 99999-9999' // Mock phone number
     }
   });
@@ -115,6 +117,25 @@ const EditProfile = () => {
                         <Input 
                           type="email" 
                           placeholder="seu@email.com" 
+                          {...field}
+                          className="bg-background"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Senha</FormLabel>
+                      <FormControl>
+                        <Input 
+                          type="password" 
+                          placeholder="Nova senha" 
                           {...field}
                           className="bg-background"
                         />

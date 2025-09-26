@@ -5,6 +5,7 @@ export const user: User = {
   id: "1",
   name: "João Silva",
   email: "joao.silva@email.com",
+  password: "hashed_password",
   avatar: "👨‍💼",
   level: 5,
   xp: 2450,
