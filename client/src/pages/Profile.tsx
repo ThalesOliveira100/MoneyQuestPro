@@ -6,6 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { mockUser, achievements, modules } from '@/data/mockData';
+import { useNavigate } from 'react-router-dom';
 import { 
   User, 
   Trophy, 
@@ -33,6 +34,14 @@ const Profile = () => {
     const nextLevelXp = (user.level + 1) * 500;
     return nextLevelXp - user.totalXp;
   };
+
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleViewProfileEdit = () => {
+    navigate('/profile/edit');
+    setIsOpen(false);
+  }
 
   const completedModules = modules.filter(m => m.completed).length;
   const totalLessons = modules.reduce((acc, module) => acc + module.lessons.length, 0);
@@ -71,14 +80,18 @@ const Profile = () => {
               </div>
             </div>
             <div className="flex flex-col space-y-2">
-              <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+              <Button 
+                variant="outline" 
+                className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                onClick={handleViewProfileEdit}
+                >
                 <Edit className="h-4 w-4 mr-2" />
                 Editar
               </Button>
-              <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+              {/* <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
                 <Share2 className="h-4 w-4 mr-2" />
                 Compartilhar
-              </Button>
+              </Button> */}
             </div>
           </div>
         </CardContent>

@@ -31,6 +31,29 @@ const Shop = () => {
     }
   };
 
+  const handleUsePowerUp = (powerUp: any) => {
+    if (powerUp.quantity > 0) {
+      powerUp.quantity -= 1;
+
+      if (powerUp.quantity === 0) {
+        setUser(prev => ({
+          ...prev,
+          powerUps: prev.powerUps.filter((pu) => pu.id !== powerUp.id)
+        }));
+      }
+
+      toast({
+        title: "Power-up usado!",
+        description: `Você usou ${powerUp.name}.`,
+      });
+    } else {
+      toast({
+        title: "Nenhum power-up disponível",
+        description: `Você não tem mais ${powerUp.name} para usar.`,
+      });
+    }
+  };
+
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
@@ -144,7 +167,12 @@ const Shop = () => {
                         <p className="text-sm text-gray-600">Quantidade: {powerUp.quantity}</p>
                       </div>
                     </div>
-                    <Button size="sm" variant="outline">
+                    
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => handleUsePowerUp(powerUp)}
+                      >
                       Usar
                     </Button>
                   </div>

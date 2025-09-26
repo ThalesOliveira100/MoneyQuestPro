@@ -5,9 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { mockUser, modules, achievements } from '@/data/mockData';
 import { BookOpen, Trophy, Coins, Zap, TrendingUp, Clock, Target } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const [user] = useState(mockUser);
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
 
   const getXpProgress = () => {
     const currentLevelXp = user.level * 500;
@@ -20,6 +23,21 @@ const Dashboard = () => {
     const nextLevelXp = (user.level + 1) * 500;
     return nextLevelXp - user.totalXp;
   };
+
+  const handleViewRanking = () => {
+    navigate('/ranking');
+    setIsOpen(false);
+  }
+
+  const handleViewShop = () => {
+    navigate('/shop');
+    setIsOpen(false);
+  }
+
+  const handleViewModules = () => {
+    navigate('/modules');
+    setIsOpen(false);
+  }
 
   const completedModules = modules.filter(m => m.completed).length;
   const totalLessons = modules.reduce((acc, module) => acc + module.lessons.length, 0);
@@ -138,13 +156,16 @@ const Dashboard = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700">
+            <Button 
+              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+              onClick={handleViewModules}
+              >
               Continuar Estudando
             </Button>
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full" onClick={handleViewRanking}>
               Ver Ranking
             </Button>
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full" onClick={handleViewShop}>
               Visitar Loja
             </Button>
           </CardContent>
