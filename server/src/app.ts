@@ -4,7 +4,7 @@ import routes from './routes';
 import cors from 'cors';
 
 // Configuração do CORS
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173', 'https://moneyquestpro.vercel.app'];
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:5500', 'http://localhost:8080' ,'https://moneyquestpro.vercel.app'];
 
 db.on("error", console.log.bind("Erro durante a conexão com o banco de dados"));
 db.once("open", () => {
