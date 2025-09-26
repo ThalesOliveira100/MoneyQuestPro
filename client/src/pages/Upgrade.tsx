@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Crown, Zap, Star, CheckCircle } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 const Upgrade = () => {
   const navigate = useNavigate();
@@ -17,6 +18,13 @@ const Upgrade = () => {
     'Acesso antecipado a novos conteúdos',
     'Comunidade VIP de investidores'
   ];
+
+  const handlerNotifyMe = () => {
+    toast({
+      title: "Notificação ativada!",
+      description: "Você será notificado quando o Pro estiver disponível.",
+    });
+  }
 
   return (
     <div className="min-h-screen bg-background p-4 sm:p-6">
@@ -95,7 +103,7 @@ const Upgrade = () => {
           <Button size="lg" disabled className="mr-4">
             Em Breve
           </Button>
-          <Button variant="outline" size="lg">
+          <Button variant="outline" size="lg" onClick={handlerNotifyMe}>
             Me Notificar
           </Button>
         </div>
