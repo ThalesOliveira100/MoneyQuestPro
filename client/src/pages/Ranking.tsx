@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { weeklyRanking, mockUser } from '@/data/mockData';
 import { Trophy, Medal, Crown, TrendingUp, Users } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 const Ranking = () => {
   const [activeTab, setActiveTab] = useState('weekly');
@@ -35,6 +36,13 @@ const Ranking = () => {
         return "bg-gray-100";
     }
   };
+
+  const handlerNotifyMe = () => {
+    toast({
+      title: "Notificação ativada!",
+      description: "Você será notificado quando o ranking mensal estiver disponível.",
+    });
+  }
 
   return (
     <div className="p-6 space-y-6">
@@ -141,7 +149,7 @@ const Ranking = () => {
                 <p className="text-gray-600 mb-4">
                   O ranking mensal estará disponível em breve!
                 </p>
-                <Button variant="outline">
+                <Button variant="outline" onClick={handlerNotifyMe}>
                   Me Notificar
                 </Button>
               </div>

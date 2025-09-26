@@ -158,15 +158,9 @@ const QuizModal = ({ isOpen, onClose, quiz, onComplete }: QuizModalProps) => {
               Sair do Quiz
             </Button>
             
-            <div className="flex space-x-2">
-              {selectedAnswer !== null && !showExplanation && (
-                <Button variant="outline" onClick={handleShowExplanation}>
-                  Ver Explicação
-                </Button>
-              )}
-              
+            <div className="flex space-x-2">             
               <Button 
-                onClick={handleNextQuestion}
+                onClick={{handleShowExplanation, handleNextQuestion}[showExplanation ? 'handleNextQuestion' : 'handleShowExplanation']}
                 disabled={selectedAnswer === null}
               >
                 {isLastQuestion ? 'Finalizar Quiz' : 'Próxima Questão'}
