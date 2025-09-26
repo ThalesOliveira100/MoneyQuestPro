@@ -4,10 +4,10 @@ import AchivementController from '../controllers/achievementsController';
 const routes = express.Router();
 
 routes
-    .get('/achievements', AchivementController.getAchievements)
-    .get('/achievements/:id', AchivementController.getAchievementById)
-    .post('/achievements', AchivementController.createAchievement)
-    .put('/achievements/:id', AchivementController.updateAchievement)
-    .delete('/achievements/:id', AchivementController.deleteAchievement);
+    .get('/', AchivementController.getAchievements)
+    .get('/:id', AchivementController.getAchievementById)
+    .post('/', AchivementController.createAchievement)
+    .put('/:id', AchivementController.updateAchievement)
+    .delete('/:id', AchivementController.deleteAchievement);
 
 export default routes;
