@@ -70,7 +70,7 @@ const Ranking = () => {
             <div className="text-right">
               <div className="flex items-center mb-1">
                 <Trophy className="h-5 w-5 mr-2" />
-                <span className="text-2xl font-bold">#1</span>
+                <span className="text-2xl font-bold">#2</span>
               </div>
               <p className="text-white/80 text-sm">{mockUser.xp} XP</p>
             </div>
