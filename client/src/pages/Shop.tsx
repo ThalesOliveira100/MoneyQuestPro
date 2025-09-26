@@ -12,11 +12,24 @@ const Shop = () => {
 
   const handlePurchase = (powerUp: any) => {
     if (user.coins >= powerUp.price) {
-      setUser(prev => ({
-        ...prev,
-        coins: prev.coins - powerUp.price,
-        powerUps: [...prev.powerUps, { ...powerUp, quantity: 1 }]
-      }));
+      setUser(prev => {
+        const exists = prev.powerUps.find(pu => pu.id === powerUp.id)
+        let updatedPowerUps;
+        if (exists) {
+          updatedPowerUps = prev.powerUps.map(pu => 
+            pu.id === powerUp.id 
+              ? { ...pu, quantity: pu.quantity + 1 } 
+              : pu
+          );
+        } else {
+          updatedPowerUps = [...prev.powerUps, { ...powerUp, quantity: 1 }];
+        }
+        return {
+          ...prev,
+          coins: prev.coins - powerUp.price,
+          powerUps: updatedPowerUps
+        };
+      });
       
       toast({
         title: "Compra realizada!",
@@ -33,7 +46,22 @@ const Shop = () => {
 
   const handleUsePowerUp = (powerUp: any) => {
     if (powerUp.quantity > 0) {
-      powerUp.quantity -= 1;
+      setUser(prev => {
+        const updatedPowerUps = prev.powerUps
+          .map(pu => 
+            pu.id === powerUp.id 
+              ? { ...pu, quantity: pu.quantity - 1 } 
+              : pu
+          )
+          .filter(pu => pu.quantity > 0); // Remove power-ups with 0 quantity
+
+        return {
+          ...prev,
+          powerUps: updatedPowerUps
+        };
+      });
+
+      // If quantity reaches 0, remove it from the list
 
       if (powerUp.quantity === 0) {
         setUser(prev => ({
