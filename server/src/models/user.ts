@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema(
         level: { type: Number, default: 0 },
         xp: { type: Number, default: 0 },
         totalxp: { type: Number, default: 0 },
+        Coins: { type: Number, default: 0 },
         streak: { type: Number, default: 0 },
         completedModules: { type: Array, default: [] },
         completedLessons: { type: Array, default: [] },
