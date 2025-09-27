@@ -96,10 +96,12 @@ const Ranking = () => {
             <CardContent>
               <div className="space-y-4">
                 {weeklyRanking.map((user) => (
+
+                  // destaque na posição do usuário logado
                   <div 
                     key={user.id}
                     className={`flex items-center justify-between p-4 rounded-lg transition-all hover:shadow-md ${
-                      user.id === mockUser.id ? 'bg-blue-50 border-2 border-blue-200' : 'bg-gray-50'
+                      user.id === '2' /* mockUser.id */ ? 'bg-blue-50 border-2 border-blue-200' : 'bg-gray-50'
                     }`}
                   >
                     <div className="flex items-center">
@@ -110,9 +112,11 @@ const Ranking = () => {
                         {user.avatar}
                       </div>
                       <div>
+                        
+                        {/* Mostra "Você" se for o usuário logado */}
                         <h4 className="font-semibold flex items-center">
                           {user.name}
-                          {user.id === mockUser.id && (
+                          {user.id === '2' /* mockUser.id */ && (
                             <Badge variant="secondary" className="ml-2">Você</Badge>
                           )}
                         </h4>
