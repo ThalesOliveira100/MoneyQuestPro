@@ -1,5 +1,6 @@
-
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { fetchUserById, updateUser } from '@/services/userService';
+import { User } from '@/types';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -7,7 +8,7 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Save, User } from 'lucide-react';
+import { ArrowLeft, Save, User as User_icon } from 'lucide-react';
 import {
   Form,
   FormControl,
@@ -16,59 +17,62 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { mockUser } from '@/data/mockData';
+import { CURRENT_USER_ID } from '@/data/currentUser';
 
 const editProfileSchema = z.object({
   name: z.string().min(2, 'Nome deve ter pelo menos 2 caracteres'),
   email: z.string().email('E-mail inválido'),
   password: z.string().min(6, 'Senha deve ter pelo menos 6 caracteres').optional(),
-  phone: z.string().regex(/^\(\d{2}\)\s\d{4,5}-\d{4}$/, 'Telefone deve estar no formato (XX) XXXXX-XXXX')
 });
 
 type EditProfileForm = z.infer<typeof editProfileSchema>;
 
 const EditProfile = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<EditProfileForm>({
     resolver: zodResolver(editProfileSchema),
-    defaultValues: {
-      name: mockUser.name,
-      email: mockUser.email,
-      password: mockUser.password || '',
-      phone: '(11) 99999-9999' // Mock phone number
-    }
   });
+
+  useEffect(() => {
+    fetchUserById(CURRENT_USER_ID)
+      .then((user) => {
+        setUser(user);
+        form.reset({
+          name: user.name,
+          email: user.email,
+          password: user.password || '',
+        });
+      })
+      .catch((err) => {
+        console.error('Erro ao buscar usuário', err);
+        setError('Não foi possível carregar os dados do usuário.');
+      });
+  }, [form]);
 
   const onSubmit = async (data: EditProfileForm) => {
     setIsLoading(true);
-    
-    // Simular salvamento
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
+    await new Promise((resolve) => updateUser(CURRENT_USER_ID, data).then(resolve));
+
     console.log('Profile updated:', data);
     setIsLoading(false);
     navigate('/profile');
   };
 
-  const formatPhone = (value: string) => {
-    const numbers = value.replace(/\D/g, '');
-    
-    if (numbers.length <= 10) {
-      return numbers.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3').replace(/-$/, '');
-    } else {
-      return numbers.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3').replace(/-$/, '');
-    }
-  };
+  if (error) return <p className="text-red-500">{error}</p>;
+  if (!user) return <p>Carregando...</p>;
 
   return (
     <div className="min-h-screen bg-background p-4 sm:p-6">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="flex items-center mb-6">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             onClick={() => navigate('/profile')}
             className="mr-4"
             size="sm"
@@ -82,7 +86,7 @@ const EditProfile = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center">
-              <User className="h-5 w-5 mr-2" />
+              <User_icon className="h-5 w-5 mr-2" />
               Informações Pessoais
             </CardTitle>
           </CardHeader>
@@ -96,11 +100,7 @@ const EditProfile = () => {
                     <FormItem>
                       <FormLabel>Nome Completo</FormLabel>
                       <FormControl>
-                        <Input 
-                          placeholder="Seu nome completo" 
-                          {...field}
-                          className="bg-background"
-                        />
+                        <Input placeholder="Seu nome completo" {...field} className="bg-background" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -114,9 +114,9 @@ const EditProfile = () => {
                     <FormItem>
                       <FormLabel>E-mail</FormLabel>
                       <FormControl>
-                        <Input 
-                          type="email" 
-                          placeholder="seu@email.com" 
+                        <Input
+                          type="email"
+                          placeholder="seu@email.com"
                           {...field}
                           className="bg-background"
                         />
@@ -133,33 +133,10 @@ const EditProfile = () => {
                     <FormItem>
                       <FormLabel>Senha</FormLabel>
                       <FormControl>
-                        <Input 
-                          type="password" 
-                          placeholder="Nova senha" 
+                        <Input
+                          type="password"
+                          placeholder="Nova senha"
                           {...field}
-                          className="bg-background"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Celular</FormLabel>
-                      <FormControl>
-                        <Input 
-                          placeholder="(11) 99999-9999" 
-                          {...field}
-                          onChange={(e) => {
-                            const formatted = formatPhone(e.target.value);
-                            field.onChange(formatted);
-                          }}
-                          maxLength={15}
                           className="bg-background"
                         />
                       </FormControl>
@@ -169,11 +146,7 @@ const EditProfile = () => {
                 />
 
                 <div className="flex space-x-4 pt-4">
-                  <Button 
-                    type="submit" 
-                    disabled={isLoading}
-                    className="flex-1"
-                  >
+                  <Button type="submit" disabled={isLoading} className="flex-1">
                     {isLoading ? (
                       'Salvando...'
                     ) : (
@@ -183,9 +156,9 @@ const EditProfile = () => {
                       </>
                     )}
                   </Button>
-                  <Button 
-                    type="button" 
-                    variant="outline" 
+                  <Button
+                    type="button"
+                    variant="outline"
                     onClick={() => navigate('/profile')}
                     className="flex-1"
                   >
@@ -197,16 +170,16 @@ const EditProfile = () => {
           </CardContent>
         </Card>
 
-        {/* Additional Info */}
+        {/* Info extra */}
         <Card className="mt-6">
           <CardContent className="pt-6">
             <div className="text-center text-sm text-muted-foreground">
               <p className="mb-2">
-                <strong>Dica de Segurança:</strong> Nunca compartilhe suas informações pessoais com terceiros.
+                <strong>Dica de Segurança:</strong> Nunca compartilhe suas informações pessoais com
+                terceiros.
               </p>
-              <p>
-                Em caso de dúvidas, entre em contato com nosso suporte.
-              </p>
+
+              <p>Em caso de dúvidas, entre em contato com nosso suporte.</p>
             </div>
           </CardContent>
         </Card>
