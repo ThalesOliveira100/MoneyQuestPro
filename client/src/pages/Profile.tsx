@@ -1,15 +1,14 @@
-
-import { useState } from 'react';
+import { User } from '@/types';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { mockUser, achievements, modules } from '@/data/mockData';
+import { achievements, modules } from '@/data/mockData';
 import { useNavigate } from 'react-router-dom';
 import { toast } from '@/hooks/use-toast';
 import { 
-  User, 
   Trophy, 
   Target, 
   Calendar, 
@@ -20,9 +19,26 @@ import {
   Settings,
   Share2
 } from 'lucide-react';
+import { CURRENT_USER_ID } from '@/data/currentUser';
+import { fetchUserById } from '@/services/userService';
 
 const Profile = () => {
-  const [user] = useState(mockUser);
+  const [user, setUser] = useState<User | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    fetchUserById(CURRENT_USER_ID)
+      .then((user) => setUser(user))
+      .catch((err) => {
+        console.error('Erro ao buscar usuário', err);
+        setError('Não foi possível carregar os dados do usuário.');
+      });
+    }, []);
+
+  if (error) return <p className="text-red-500">{error}</p>;
+  if (!user) return <p>Carregando...</p>;
 
   const getXpProgress = () => {
     const currentLevelXp = user.level * 500;
@@ -33,11 +49,8 @@ const Profile = () => {
 
   const getXpToNextLevel = () => {
     const nextLevelXp = (user.level + 1) * 500;
-    return nextLevelXp - user.totalXp;
+    return nextLevelXp - user.totalxp;
   };
-
-  const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
 
   const handleViewProfileEdit = () => {
     navigate('/profile/edit');
@@ -56,7 +69,7 @@ const Profile = () => {
   const completedLessons = user.completedLessons.length;
 
   const stats = [
-    { label: 'XP Total', value: user.totalXp, icon: Zap, color: 'text-yellow-600' },
+    { label: 'XP Total', value: user.totalxp, icon: Zap, color: 'text-yellow-600' },
     { label: 'Nível Atual', value: user.level, icon: Trophy, color: 'text-blue-600' },
     { label: 'Moedas', value: user.coins, icon: Coins, color: 'text-green-600' },
     { label: 'Sequência', value: `${user.streak} dias`, icon: Calendar, color: 'text-red-600' },
@@ -79,7 +92,7 @@ const Profile = () => {
                     Nível {user.level}
                   </Badge>
                   <Badge className="bg-white/20 text-white">
-                    {user.totalXp} XP
+                    {user.totalxp} XP
                   </Badge>
                 </div>
                 <p className="text-white/80 mt-2">

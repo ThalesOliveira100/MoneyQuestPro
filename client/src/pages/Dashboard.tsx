@@ -1,17 +1,32 @@
-
-import { useState } from 'react';
+import { User } from '@/types';
+import { fetchUserById } from '@/services/userService';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { mockUser, modules, achievements } from '@/data/mockData';
+import { modules, achievements } from '@/data/mockData';
 import { BookOpen, Trophy, Coins, Zap, TrendingUp, Clock, Target } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { CURRENT_USER_ID } from '@/data/currentUser';
 
 const Dashboard = () => {
-  const [user] = useState(mockUser);
+  const [user, setUser] = useState<User | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    fetchUserById(CURRENT_USER_ID)
+      .then((user) => setUser(user))
+      .catch((err) => {
+        console.error('Erro ao buscar usuário', err);
+        setError('Não foi possível carregar os dados do usuário.');
+      });
+    }, []);
+
+  if (error) return <p className="text-red-500">{error}</p>;
+  if (!user) return <p>Carregando...</p>;
+  
   const getXpProgress = () => {
     const currentLevelXp = user.level * 500;
     const nextLevelXp = (user.level + 1) * 500;
@@ -21,7 +36,7 @@ const Dashboard = () => {
 
   const getXpToNextLevel = () => {
     const nextLevelXp = (user.level + 1) * 500;
-    return nextLevelXp - user.totalXp;
+    return nextLevelXp - user.totalxp;
   };
 
   const handleViewRanking = () => {
@@ -78,7 +93,7 @@ const Dashboard = () => {
             <Zap className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{user.totalXp}</div>
+            <div className="text-2xl font-bold">{user.totalxp}</div>
             <p className="text-xs text-muted-foreground">
               {getXpToNextLevel()} XP para o próximo nível
             </p>

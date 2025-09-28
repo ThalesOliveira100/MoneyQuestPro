@@ -1,20 +1,34 @@
-
-import { Menu, Bell, User } from 'lucide-react';
+import { User } from '@/types';
+import { fetchUserById } from '@/services/userService';
+import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import NotificationDropdown from './NotificationDropdown';
 import ProfileDropdown from './ProfileDropdown';
 import ThemeToggle from './ThemeToggle';
 import { mockUser } from '@/data/mockData';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { CURRENT_USER_ID } from '@/data/currentUser';
 
 interface HeaderProps {
   onMenuClick: () => void;
 }
 
 const Header = ({ onMenuClick }: HeaderProps) => {
-  const [user, setUser] = useState(mockUser);
+  const [user, setUser] = useState<User | null >(null);
+  const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    fetchUserById(CURRENT_USER_ID)
+      .then((user) => setUser(user))
+      .catch((err) => {
+        console.error('Erro ao buscar usuário', err);
+        setError('Não foi possível carregar os dados do usuário.');
+      });
+    }, []);
+
+  if (error) return <p className="text-red-500">{error}</p>;
+  if (!user) return <p>Carregando...</p>;
+  
   return (
     <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 px-4 sm:px-6 h-16 flex items-center justify-between">
       <div className="flex items-center">
