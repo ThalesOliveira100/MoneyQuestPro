@@ -7,7 +7,7 @@ export interface User {
   avatar: string;
   level: number;
   xp: number;
-  totalXp: number;
+  totalxp: number;
   coins: number;
   streak: number;
   completedModules: string[];

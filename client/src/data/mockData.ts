@@ -9,7 +9,7 @@ export const user: User = {
   avatar: "👨‍💼",
   level: 5,
   xp: 2450,
-  totalXp: 3200,
+  totalxp: 3200,
   coins: 180,
   streak: 7,
   completedModules: ["1"],
